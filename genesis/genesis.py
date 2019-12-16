@@ -14,26 +14,36 @@ except ImportError:
 
 
 def make_directories(*paths):
+    """Creates directories on the specified paths if they do not exist."""
     for path in paths:
         if not path.exists():
             path.mkdir()
 
 
 def main():
+    """Most basic implementation of the simulation algorithm to fulfill
+    the intended purpose of the application."""
+
+    # Define the path objects
     root_path = pathlib.Path(__file__).resolve().parent
     card_sets_path = root_path.joinpath("card_sets.json")
     output_path = root_path.joinpath("output")
     minimum_path = output_path.joinpath("minimum")
     maximum_path = output_path.joinpath("maximum")
 
+    # Create the output paths
     make_directories(output_path, minimum_path, maximum_path)
 
+    # Parse the JSON file holding the data for the card sets
     with card_sets_path.open("r", encoding="UTF-8") as f:
         card_sets = json.load(f)
 
+    # Iterate over the card sets and process
     for cs, (cc, tc) in card_sets.items():
         print(f"Processing {cs}")
 
+        # Minimum: Obtain PUR cards
+        # Maximum: Obtain ALL cards
         minimum = simulation.aggregate(cc, tc, 10_000)
         maximum = simulation.aggregate(cc, cc, 10_000)
 
