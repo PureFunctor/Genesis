@@ -32,6 +32,7 @@ void simulation(int cc, int tc, SimulationData *simulation_data)
     int roll_count = 0;
     int dupe_count = 0;
 
+    /* Used for the "guaranteed" roll */
     int generation_power = 0;
     int draws_count = 0;
     int zeros_count = 0;
@@ -40,16 +41,19 @@ void simulation(int cc, int tc, SimulationData *simulation_data)
     int *zeros = calloc(cc, sizeof(int));
     int *drawn = calloc(5,  sizeof(int));
 
+    /* Ensure that tc is not higher than cc */
     tc = cc >= tc ? tc : cc;
 
     while (!f) {
         roll_count++;
         draws_count = generation_power < 100 ? 5 : 4;
 
+        /* Regular roll */
         for (i = 0; i < draws_count; i++) {
             drawn[i] = rand() % cc;
         }
 
+        /* Guaranteed roll */
         if (draws_count == 4) {
             zeros_count = 0;
             for (i = 0; i < cc; i++) {
@@ -61,13 +65,15 @@ void simulation(int cc, int tc, SimulationData *simulation_data)
             generation_power = 0;
         }
 
+        /* Duplicate check */
         for (i = 0; i < 5; i++) {
             if (owned[drawn[i]]++) {
                 dupe_count++;
                 generation_power += 10;
             }
         }
-        
+
+        /* Finish status check */        
         f = 1;
         for (i = 0; i < tc; i++) {
             if (!owned[i]) {

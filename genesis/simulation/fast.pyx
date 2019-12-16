@@ -17,6 +17,10 @@ cdef extern from "c_simulation.h":
 
 
 def aggregate(int cc, int tc, int sample_size) -> dict:
+    """Behaves the same way as the function defined in the slower Python
+    implementation provides; but utilizes a simulation algorithm written
+    in C."""
+
     cdef SimulationData *simulation_data = new_SimulationData(sample_size)
     collect(cc, tc, simulation_data)
 
