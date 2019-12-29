@@ -13,7 +13,10 @@ else:
 
 extensions = [
     Extension(
-        "fast", [f"simulation\\fast.{FILE_EXTENSION}", "simulation\\c_simulation.c"]
+        "genesis.simulation.fast", [
+            f"genesis\\simulation\\fast.{FILE_EXTENSION}",
+            "genesis\\simulation\\c_simulation.c",
+        ]
     )
 ]
 
