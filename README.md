@@ -6,11 +6,11 @@ The simulation algorithm has implementations in both Python and C; the latter is
 
 **In order to use the faster implementation written in C:**
 ```sh
+# Build the extension
+python setup.py build_ext --inplace
+
 # Navigate to genesis
 cd genesis
-
-# Build the extension
-python setup.py build_ext -b simulation
 
 # Run the application
 python genesis.py
