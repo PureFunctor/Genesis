@@ -1,3 +1,4 @@
+import os.path
 from setuptools import Extension, setup
 
 
@@ -11,18 +12,18 @@ else:
     FILE_EXTENSION = "pyx"
 
 
-extensions = [
+EXTENSIONS = [
     Extension(
         "genesis.simulation.fast", [
-            f"genesis\\simulation\\fast.{FILE_EXTENSION}",
-            "genesis\\simulation\\c_simulation.c",
+            os.path.join("genesis", "simulation", f"fast.{FILE_EXTENSION}"),
+            os.path.join("genesis", "simulation", "c_simulation.c"),
         ]
     )
 ]
 
 
 if FILE_EXTENSION == "pyx":
-    extensions = cythonize(extensions)
+    EXTENSIONS = cythonize(EXTENSIONS)
 
 
-setup(ext_modules=extensions)
+setup(ext_modules=EXTENSIONS)
