@@ -1,44 +1,41 @@
 import random
 
 
-def simulate(cc, tc):
-    """Takes the total count of cards in a card set and the count of target
-    cards and returns the count of rolls and duplicates after obtaining every
-    target card."""
+def simulation(cc, tc):
+    """Takes the total count of cards in a card pack and the count
+    of specific cards to be obtained and returns the count of rolls
+    and duplicates aggregated in obtained the target cards."""
 
-    # Ensure that tc is less than cc
     tc = tc if cc >= tc else cc
 
-    # Define the sets that hold the cards
-    trg_set = set(range(1, tc + 1))
-    unowned = set(range(1, cc + 1))
+    missing = set(range(1, cc + 1))
+    targets = set(range(1, tc + 1))
 
     roll_count = 0
     dupe_count = 0
 
-    # Used for the "guaranteed" roll
     generation_power = 0
 
-    while unowned.intersection(trg_set):
+    while missing.intersection(targets):
         roll_count += 1
 
-        # Regular roll
         rolls = 5 if generation_power < 100 else 4
-        cards = (random.randint(1, cc) for _ in range(rolls))
 
-        # Guaranteed roll
         if rolls == 4:
-            unique = random.choice(list(unowned))
-            unowned.remove(unique)
+            card = random.choice(list(missing))
+            missing.remove(card)
             generation_power = 0
+        
+        for _ in range(rolls):
+            card = random.randint(1, cc)
 
-        for card in cards:
-            if card in unowned:
-                unowned.remove(card)
-            elif card not in unowned:
+            if card in missing:
+                missing.remove(card)
+            
+            else:
                 generation_power += 10
                 dupe_count += 1
-
+    
     return roll_count, dupe_count
 
 
@@ -54,7 +51,7 @@ def aggregate(cc, tc, ss):
     count, aggregate and split the data for the roll counts and the duplicate
     counts, compute the mean and the frequency of items."""
 
-    aggregate = (simulate(cc, tc) for _ in range(ss))
+    aggregate = (simulation(cc, tc) for _ in range(ss))
     rc, dc = zip(*aggregate)
     return {
         "rc_mean": sum(rc) / len(rc),
