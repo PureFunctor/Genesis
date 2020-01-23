@@ -1,7 +1,7 @@
 import random
 
 
-def simulation(cc, tc):
+def simulate(cc, tc):
     """Takes the total count of cards in a card pack and the count
     of specific cards to be obtained and returns the count of rolls
     and duplicates aggregated in obtained the target cards."""
@@ -41,18 +41,20 @@ def simulation(cc, tc):
 
 def frequency(data):
     """Returns the frequency of items in a data tuple."""
+
     items = sorted(set(data))
     count = (data.count(i) for i in items)
+
     return dict(zip(items, count))
 
 
 def aggregate(cc, tc, ss):
-    """Given a sample size, call simulate on a given card count and target
-    count, aggregate and split the data for the roll counts and the duplicate
-    counts, compute the mean and the frequency of items."""
+    """Aggregates the result of a call to simulate given
+    a specific card count, target count, and sample size."""
 
-    aggregate = (simulation(cc, tc) for _ in range(ss))
-    rc, dc = zip(*aggregate)
+    data = (simulate(cc, tc) for _ in range(ss))
+    rc, dc = zip(*data)
+
     return {
         "rc_mean": sum(rc) / len(rc),
         "dc_mean": sum(dc) / len(dc),

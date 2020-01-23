@@ -16,7 +16,7 @@ EXTENSIONS = [
     Extension(
         "genesis.simulation.fast", [
             os.path.join("genesis", "simulation", f"fast.{FILE_EXTENSION}"),
-            os.path.join("genesis", "simulation", "c_simulation.c"),
+            os.path.join("genesis", "simulation", "c_fast.c"),
         ]
     )
 ]

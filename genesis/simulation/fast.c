@@ -4,7 +4,7 @@
 {
     "distutils": {
         "depends": [
-            "genesis\\simulation\\c_simulation.h"
+            "genesis\\simulation\\c_fast.h"
         ],
         "include_dirs": [
             "genesis\\simulation"
@@ -12,7 +12,7 @@
         "name": "genesis.simulation.fast",
         "sources": [
             "genesis\\simulation\\fast.pyx",
-            "genesis\\simulation\\c_simulation.c"
+            "genesis\\simulation\\c_fast.c"
         ]
     },
     "module_name": "genesis.simulation.fast"
@@ -612,7 +612,7 @@ static CYTHON_INLINE float __PYX_NAN() {
 #define __PYX_HAVE__genesis__simulation__fast
 #define __PYX_HAVE_API__genesis__simulation__fast
 /* Early includes */
-#include "c_simulation.h"
+#include "c_fast.h"
 #ifdef _OPENMP
 #include <omp.h>
 #endif /* _OPENMP */
@@ -1088,18 +1088,17 @@ static PyObject *__pyx_tuple_;
 static PyObject *__pyx_codeobj__2;
 /* Late includes */
 
-/* "genesis/simulation/fast.pyx":19
+/* "genesis/simulation/fast.pyx":20
  * 
  * 
  * def aggregate(int cc, int tc, int sample_size) -> dict:             # <<<<<<<<<<<<<<
- *     """Behaves the same way as the function defined in the slower Python
- *     implementation provides; but utilizes a simulation algorithm written
+ *     cdef SimulationData *simulation_data = new_SimulationData(sample_size)
+ *     c_aggregate(cc, tc, simulation_data)
  */
 
 /* Python wrapper */
 static PyObject *__pyx_pw_7genesis_10simulation_4fast_1aggregate(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_7genesis_10simulation_4fast_aggregate[] = "Behaves the same way as the function defined in the slower Python\n    implementation provides; but utilizes a simulation algorithm written\n    in C.";
-static PyMethodDef __pyx_mdef_7genesis_10simulation_4fast_1aggregate = {"aggregate", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7genesis_10simulation_4fast_1aggregate, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7genesis_10simulation_4fast_aggregate};
+static PyMethodDef __pyx_mdef_7genesis_10simulation_4fast_1aggregate = {"aggregate", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7genesis_10simulation_4fast_1aggregate, METH_VARARGS|METH_KEYWORDS, 0};
 static PyObject *__pyx_pw_7genesis_10simulation_4fast_1aggregate(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   int __pyx_v_cc;
   int __pyx_v_tc;
@@ -1132,17 +1131,17 @@ static PyObject *__pyx_pw_7genesis_10simulation_4fast_1aggregate(PyObject *__pyx
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_tc)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("aggregate", 1, 3, 3, 1); __PYX_ERR(0, 19, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("aggregate", 1, 3, 3, 1); __PYX_ERR(0, 20, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_sample_size)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("aggregate", 1, 3, 3, 2); __PYX_ERR(0, 19, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("aggregate", 1, 3, 3, 2); __PYX_ERR(0, 20, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "aggregate") < 0)) __PYX_ERR(0, 19, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "aggregate") < 0)) __PYX_ERR(0, 20, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -1151,13 +1150,13 @@ static PyObject *__pyx_pw_7genesis_10simulation_4fast_1aggregate(PyObject *__pyx
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
     }
-    __pyx_v_cc = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_cc == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 19, __pyx_L3_error)
-    __pyx_v_tc = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_tc == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 19, __pyx_L3_error)
-    __pyx_v_sample_size = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_sample_size == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 19, __pyx_L3_error)
+    __pyx_v_cc = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_cc == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 20, __pyx_L3_error)
+    __pyx_v_tc = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_tc == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 20, __pyx_L3_error)
+    __pyx_v_sample_size = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_sample_size == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 20, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("aggregate", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 19, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("aggregate", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 20, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("genesis.simulation.fast.aggregate", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1190,66 +1189,66 @@ static PyObject *__pyx_pf_7genesis_10simulation_4fast_aggregate(CYTHON_UNUSED Py
   PyObject *__pyx_t_7 = NULL;
   __Pyx_RefNannySetupContext("aggregate", 0);
 
-  /* "genesis/simulation/fast.pyx":24
- *     in C."""
+  /* "genesis/simulation/fast.pyx":21
  * 
+ * def aggregate(int cc, int tc, int sample_size) -> dict:
  *     cdef SimulationData *simulation_data = new_SimulationData(sample_size)             # <<<<<<<<<<<<<<
- *     collect(cc, tc, simulation_data)
+ *     c_aggregate(cc, tc, simulation_data)
  * 
  */
   __pyx_v_simulation_data = new_SimulationData(__pyx_v_sample_size);
 
-  /* "genesis/simulation/fast.pyx":25
- * 
+  /* "genesis/simulation/fast.pyx":22
+ * def aggregate(int cc, int tc, int sample_size) -> dict:
  *     cdef SimulationData *simulation_data = new_SimulationData(sample_size)
- *     collect(cc, tc, simulation_data)             # <<<<<<<<<<<<<<
+ *     c_aggregate(cc, tc, simulation_data)             # <<<<<<<<<<<<<<
  * 
- *     cdef double rcm = simulation_data.roll_count_aggregate / sample_size
+ *     cdef double rcm = simulation_data.roll_count_agg / sample_size
  */
-  collect(__pyx_v_cc, __pyx_v_tc, __pyx_v_simulation_data);
+  c_aggregate(__pyx_v_cc, __pyx_v_tc, __pyx_v_simulation_data);
 
-  /* "genesis/simulation/fast.pyx":27
- *     collect(cc, tc, simulation_data)
+  /* "genesis/simulation/fast.pyx":24
+ *     c_aggregate(cc, tc, simulation_data)
  * 
- *     cdef double rcm = simulation_data.roll_count_aggregate / sample_size             # <<<<<<<<<<<<<<
- *     cdef double dcm = simulation_data.dupe_count_aggregate / sample_size
+ *     cdef double rcm = simulation_data.roll_count_agg / sample_size             # <<<<<<<<<<<<<<
+ *     cdef double dcm = simulation_data.dupe_count_agg / sample_size
  * 
  */
   if (unlikely(__pyx_v_sample_size == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 27, __pyx_L1_error)
+    __PYX_ERR(0, 24, __pyx_L1_error)
   }
-  __pyx_v_rcm = (((double)__pyx_v_simulation_data->roll_count_aggregate) / ((double)__pyx_v_sample_size));
+  __pyx_v_rcm = (((double)__pyx_v_simulation_data->roll_count_agg) / ((double)__pyx_v_sample_size));
 
-  /* "genesis/simulation/fast.pyx":28
+  /* "genesis/simulation/fast.pyx":25
  * 
- *     cdef double rcm = simulation_data.roll_count_aggregate / sample_size
- *     cdef double dcm = simulation_data.dupe_count_aggregate / sample_size             # <<<<<<<<<<<<<<
+ *     cdef double rcm = simulation_data.roll_count_agg / sample_size
+ *     cdef double dcm = simulation_data.dupe_count_agg / sample_size             # <<<<<<<<<<<<<<
  * 
  *     cdef dict rcf = {
  */
   if (unlikely(__pyx_v_sample_size == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 28, __pyx_L1_error)
+    __PYX_ERR(0, 25, __pyx_L1_error)
   }
-  __pyx_v_dcm = (((double)__pyx_v_simulation_data->dupe_count_aggregate) / ((double)__pyx_v_sample_size));
+  __pyx_v_dcm = (((double)__pyx_v_simulation_data->dupe_count_agg) / ((double)__pyx_v_sample_size));
 
-  /* "genesis/simulation/fast.pyx":30
- *     cdef double dcm = simulation_data.dupe_count_aggregate / sample_size
+  /* "genesis/simulation/fast.pyx":27
+ *     cdef double dcm = simulation_data.dupe_count_agg / sample_size
  * 
  *     cdef dict rcf = {             # <<<<<<<<<<<<<<
- *         i: simulation_data.roll_count_frequency_array[i]
+ *         i: simulation_data.roll_count_frq[i]
  *         for i in range(FREQUENCY_MAX)
  */
   { /* enter inner scope */
-    __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
+    __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
 
-    /* "genesis/simulation/fast.pyx":32
+    /* "genesis/simulation/fast.pyx":29
  *     cdef dict rcf = {
- *         i: simulation_data.roll_count_frequency_array[i]
+ *         i: simulation_data.roll_count_frq[i]
  *         for i in range(FREQUENCY_MAX)             # <<<<<<<<<<<<<<
- *         if simulation_data.roll_count_frequency_array[i]
+ *         if simulation_data.roll_count_frq[i]
  *     }
  */
     __pyx_t_2 = FREQUENCY_MAX;
@@ -1257,35 +1256,35 @@ static PyObject *__pyx_pf_7genesis_10simulation_4fast_aggregate(CYTHON_UNUSED Py
     for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
       __pyx_7genexpr__pyx_v_i = __pyx_t_4;
 
-      /* "genesis/simulation/fast.pyx":33
- *         i: simulation_data.roll_count_frequency_array[i]
+      /* "genesis/simulation/fast.pyx":30
+ *         i: simulation_data.roll_count_frq[i]
  *         for i in range(FREQUENCY_MAX)
- *         if simulation_data.roll_count_frequency_array[i]             # <<<<<<<<<<<<<<
+ *         if simulation_data.roll_count_frq[i]             # <<<<<<<<<<<<<<
  *     }
  * 
  */
-      __pyx_t_5 = ((__pyx_v_simulation_data->roll_count_frequency_array[__pyx_7genexpr__pyx_v_i]) != 0);
+      __pyx_t_5 = ((__pyx_v_simulation_data->roll_count_frq[__pyx_7genexpr__pyx_v_i]) != 0);
       if (__pyx_t_5) {
 
-        /* "genesis/simulation/fast.pyx":31
+        /* "genesis/simulation/fast.pyx":28
  * 
  *     cdef dict rcf = {
- *         i: simulation_data.roll_count_frequency_array[i]             # <<<<<<<<<<<<<<
+ *         i: simulation_data.roll_count_frq[i]             # <<<<<<<<<<<<<<
  *         for i in range(FREQUENCY_MAX)
- *         if simulation_data.roll_count_frequency_array[i]
+ *         if simulation_data.roll_count_frq[i]
  */
-        __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_7genexpr__pyx_v_i); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 31, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_7genexpr__pyx_v_i); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 28, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
-        __pyx_t_7 = __Pyx_PyInt_From_int((__pyx_v_simulation_data->roll_count_frequency_array[__pyx_7genexpr__pyx_v_i])); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 31, __pyx_L1_error)
+        __pyx_t_7 = __Pyx_PyInt_From_int((__pyx_v_simulation_data->roll_count_frq[__pyx_7genexpr__pyx_v_i])); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 28, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
-        if (unlikely(PyDict_SetItem(__pyx_t_1, (PyObject*)__pyx_t_6, (PyObject*)__pyx_t_7))) __PYX_ERR(0, 31, __pyx_L1_error)
+        if (unlikely(PyDict_SetItem(__pyx_t_1, (PyObject*)__pyx_t_6, (PyObject*)__pyx_t_7))) __PYX_ERR(0, 28, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-        /* "genesis/simulation/fast.pyx":33
- *         i: simulation_data.roll_count_frequency_array[i]
+        /* "genesis/simulation/fast.pyx":30
+ *         i: simulation_data.roll_count_frq[i]
  *         for i in range(FREQUENCY_MAX)
- *         if simulation_data.roll_count_frequency_array[i]             # <<<<<<<<<<<<<<
+ *         if simulation_data.roll_count_frq[i]             # <<<<<<<<<<<<<<
  *     }
  * 
  */
@@ -1295,22 +1294,22 @@ static PyObject *__pyx_pf_7genesis_10simulation_4fast_aggregate(CYTHON_UNUSED Py
   __pyx_v_rcf = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "genesis/simulation/fast.pyx":36
+  /* "genesis/simulation/fast.pyx":33
  *     }
  * 
  *     cdef dict dcf = {             # <<<<<<<<<<<<<<
- *         i: simulation_data.dupe_count_frequency_array[i]
+ *         i: simulation_data.dupe_count_frq[i]
  *         for i in range(FREQUENCY_MAX)
  */
   { /* enter inner scope */
-    __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
+    __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 33, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
 
-    /* "genesis/simulation/fast.pyx":38
+    /* "genesis/simulation/fast.pyx":35
  *     cdef dict dcf = {
- *         i: simulation_data.dupe_count_frequency_array[i]
+ *         i: simulation_data.dupe_count_frq[i]
  *         for i in range(FREQUENCY_MAX)             # <<<<<<<<<<<<<<
- *         if simulation_data.dupe_count_frequency_array[i]
+ *         if simulation_data.dupe_count_frq[i]
  *     }
  */
     __pyx_t_2 = FREQUENCY_MAX;
@@ -1318,35 +1317,35 @@ static PyObject *__pyx_pf_7genesis_10simulation_4fast_aggregate(CYTHON_UNUSED Py
     for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
       __pyx_8genexpr1__pyx_v_i = __pyx_t_4;
 
-      /* "genesis/simulation/fast.pyx":39
- *         i: simulation_data.dupe_count_frequency_array[i]
+      /* "genesis/simulation/fast.pyx":36
+ *         i: simulation_data.dupe_count_frq[i]
  *         for i in range(FREQUENCY_MAX)
- *         if simulation_data.dupe_count_frequency_array[i]             # <<<<<<<<<<<<<<
+ *         if simulation_data.dupe_count_frq[i]             # <<<<<<<<<<<<<<
  *     }
  * 
  */
-      __pyx_t_5 = ((__pyx_v_simulation_data->dupe_count_frequency_array[__pyx_8genexpr1__pyx_v_i]) != 0);
+      __pyx_t_5 = ((__pyx_v_simulation_data->dupe_count_frq[__pyx_8genexpr1__pyx_v_i]) != 0);
       if (__pyx_t_5) {
 
-        /* "genesis/simulation/fast.pyx":37
+        /* "genesis/simulation/fast.pyx":34
  * 
  *     cdef dict dcf = {
- *         i: simulation_data.dupe_count_frequency_array[i]             # <<<<<<<<<<<<<<
+ *         i: simulation_data.dupe_count_frq[i]             # <<<<<<<<<<<<<<
  *         for i in range(FREQUENCY_MAX)
- *         if simulation_data.dupe_count_frequency_array[i]
+ *         if simulation_data.dupe_count_frq[i]
  */
-        __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_8genexpr1__pyx_v_i); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 37, __pyx_L1_error)
+        __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_8genexpr1__pyx_v_i); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 34, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_6 = __Pyx_PyInt_From_int((__pyx_v_simulation_data->dupe_count_frequency_array[__pyx_8genexpr1__pyx_v_i])); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 37, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyInt_From_int((__pyx_v_simulation_data->dupe_count_frq[__pyx_8genexpr1__pyx_v_i])); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 34, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
-        if (unlikely(PyDict_SetItem(__pyx_t_1, (PyObject*)__pyx_t_7, (PyObject*)__pyx_t_6))) __PYX_ERR(0, 37, __pyx_L1_error)
+        if (unlikely(PyDict_SetItem(__pyx_t_1, (PyObject*)__pyx_t_7, (PyObject*)__pyx_t_6))) __PYX_ERR(0, 34, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-        /* "genesis/simulation/fast.pyx":39
- *         i: simulation_data.dupe_count_frequency_array[i]
+        /* "genesis/simulation/fast.pyx":36
+ *         i: simulation_data.dupe_count_frq[i]
  *         for i in range(FREQUENCY_MAX)
- *         if simulation_data.dupe_count_frequency_array[i]             # <<<<<<<<<<<<<<
+ *         if simulation_data.dupe_count_frq[i]             # <<<<<<<<<<<<<<
  *     }
  * 
  */
@@ -1356,53 +1355,53 @@ static PyObject *__pyx_pf_7genesis_10simulation_4fast_aggregate(CYTHON_UNUSED Py
   __pyx_v_dcf = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "genesis/simulation/fast.pyx":43
+  /* "genesis/simulation/fast.pyx":40
  * 
  *     cdef dict result_data = {
  *         "rc_mean": rcm,             # <<<<<<<<<<<<<<
  *         "dc_mean": dcm,
  *         "rc_frequency": rcf,
  */
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_rcm); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_rcm); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_rc_mean, __pyx_t_6) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_rc_mean, __pyx_t_6) < 0) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-  /* "genesis/simulation/fast.pyx":44
+  /* "genesis/simulation/fast.pyx":41
  *     cdef dict result_data = {
  *         "rc_mean": rcm,
  *         "dc_mean": dcm,             # <<<<<<<<<<<<<<
  *         "rc_frequency": rcf,
  *         "dc_frequency": dcf,
  */
-  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_dcm); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_dcm); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 41, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_dc_mean, __pyx_t_6) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_dc_mean, __pyx_t_6) < 0) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-  /* "genesis/simulation/fast.pyx":45
+  /* "genesis/simulation/fast.pyx":42
  *         "rc_mean": rcm,
  *         "dc_mean": dcm,
  *         "rc_frequency": rcf,             # <<<<<<<<<<<<<<
  *         "dc_frequency": dcf,
  *     }
  */
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_rc_frequency, __pyx_v_rcf) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_rc_frequency, __pyx_v_rcf) < 0) __PYX_ERR(0, 40, __pyx_L1_error)
 
-  /* "genesis/simulation/fast.pyx":46
+  /* "genesis/simulation/fast.pyx":43
  *         "dc_mean": dcm,
  *         "rc_frequency": rcf,
  *         "dc_frequency": dcf,             # <<<<<<<<<<<<<<
  *     }
  * 
  */
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_dc_frequency, __pyx_v_dcf) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_u_dc_frequency, __pyx_v_dcf) < 0) __PYX_ERR(0, 40, __pyx_L1_error)
   __pyx_v_result_data = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "genesis/simulation/fast.pyx":49
+  /* "genesis/simulation/fast.pyx":46
  *     }
  * 
  *     del_SimulationData(simulation_data)             # <<<<<<<<<<<<<<
@@ -1411,7 +1410,7 @@ static PyObject *__pyx_pf_7genesis_10simulation_4fast_aggregate(CYTHON_UNUSED Py
  */
   del_SimulationData(__pyx_v_simulation_data);
 
-  /* "genesis/simulation/fast.pyx":51
+  /* "genesis/simulation/fast.pyx":48
  *     del_SimulationData(simulation_data)
  * 
  *     return result_data             # <<<<<<<<<<<<<<
@@ -1421,12 +1420,12 @@ static PyObject *__pyx_pf_7genesis_10simulation_4fast_aggregate(CYTHON_UNUSED Py
   __pyx_r = __pyx_v_result_data;
   goto __pyx_L0;
 
-  /* "genesis/simulation/fast.pyx":19
+  /* "genesis/simulation/fast.pyx":20
  * 
  * 
  * def aggregate(int cc, int tc, int sample_size) -> dict:             # <<<<<<<<<<<<<<
- *     """Behaves the same way as the function defined in the slower Python
- *     implementation provides; but utilizes a simulation algorithm written
+ *     cdef SimulationData *simulation_data = new_SimulationData(sample_size)
+ *     c_aggregate(cc, tc, simulation_data)
  */
 
   /* function exit code */
@@ -1516,7 +1515,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 29, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -1526,17 +1525,17 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "genesis/simulation/fast.pyx":19
+  /* "genesis/simulation/fast.pyx":20
  * 
  * 
  * def aggregate(int cc, int tc, int sample_size) -> dict:             # <<<<<<<<<<<<<<
- *     """Behaves the same way as the function defined in the slower Python
- *     implementation provides; but utilizes a simulation algorithm written
+ *     cdef SimulationData *simulation_data = new_SimulationData(sample_size)
+ *     c_aggregate(cc, tc, simulation_data)
  */
-  __pyx_tuple_ = PyTuple_Pack(11, __pyx_n_s_cc, __pyx_n_s_tc, __pyx_n_s_sample_size, __pyx_n_s_simulation_data, __pyx_n_s_rcm, __pyx_n_s_dcm, __pyx_n_s_rcf, __pyx_n_s_dcf, __pyx_n_s_result_data, __pyx_n_s_i, __pyx_n_s_i); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(11, __pyx_n_s_cc, __pyx_n_s_tc, __pyx_n_s_sample_size, __pyx_n_s_simulation_data, __pyx_n_s_rcm, __pyx_n_s_dcm, __pyx_n_s_rcf, __pyx_n_s_dcf, __pyx_n_s_result_data, __pyx_n_s_i, __pyx_n_s_i); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
-  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(3, 0, 11, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_genesis_simulation_fast_pyx, __pyx_n_s_aggregate, 19, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(3, 0, 11, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_genesis_simulation_fast_pyx, __pyx_n_s_aggregate, 20, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -1812,22 +1811,22 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "genesis/simulation/fast.pyx":19
+  /* "genesis/simulation/fast.pyx":20
  * 
  * 
  * def aggregate(int cc, int tc, int sample_size) -> dict:             # <<<<<<<<<<<<<<
- *     """Behaves the same way as the function defined in the slower Python
- *     implementation provides; but utilizes a simulation algorithm written
+ *     cdef SimulationData *simulation_data = new_SimulationData(sample_size)
+ *     c_aggregate(cc, tc, simulation_data)
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_7genesis_10simulation_4fast_1aggregate, NULL, __pyx_n_s_genesis_simulation_fast); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_7genesis_10simulation_4fast_1aggregate, NULL, __pyx_n_s_genesis_simulation_fast); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_aggregate, __pyx_t_1) < 0) __PYX_ERR(0, 19, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_aggregate, __pyx_t_1) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "genesis/simulation/fast.pyx":1
  * #cython: language_level=3             # <<<<<<<<<<<<<<
  * 
- * cdef extern from "c_simulation.h":
+ * cdef extern from "c_fast.h":
  */
   __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
